@@ -1,5 +1,8 @@
+import os
+import sys
+sys.path.insert(0, "./")
 from cloudwatch_events.event_factory import EventFactory
-import os,sys
+
 import boto3
 import json
 
