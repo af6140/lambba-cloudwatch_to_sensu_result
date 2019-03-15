@@ -1,8 +1,7 @@
 import os
 import sys
-sys.path.insert(0, "./")
-from cloudwatch_events.event_factory import EventFactory
 
+from cloudwatch_events.event_factory import EventFactory
 import boto3
 import json
 
@@ -34,7 +33,7 @@ def handler(event, context):
 
         if sensu_result:
             sensu_result.update(extra_props)
-            sns = boto3.client('sns', region=AWS_REGON)
+            sns = boto3.client('sns', region_name=AWS_REGON)
             response = sns.publish(
                 TargetArn = SNS_ARN,
                 Message = json.dumps(sensu_result)
