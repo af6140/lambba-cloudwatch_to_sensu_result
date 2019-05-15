@@ -29,7 +29,7 @@ def handler(event, context):
         try:
             extra_props = json.loads(EXTRA_SENSU_CHECK_PROPS)
         except ValueError:
-            logger.error('cannot parse as jsn: {}'.format(EXTRA_SENSU_CHECK_PROPS))
+            logger.error('cannot parse as json: {}'.format(EXTRA_SENSU_CHECK_PROPS))
 
         if sensu_result:
             sensu_result.update(extra_props)
