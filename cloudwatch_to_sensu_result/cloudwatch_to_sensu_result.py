@@ -24,6 +24,9 @@ def handler(event, context):
     if SNS_ARN:
         factroy_id = EventFactory.getFactoryId(event)
         event = EventFactory.createEvent(factroy_id, event)
+        if event is None:
+            logger.error("Cannot find factory for event: {}".format(event))
+            return
         sensu_result = event.sensu_result()
         extra_props = {}
         try:

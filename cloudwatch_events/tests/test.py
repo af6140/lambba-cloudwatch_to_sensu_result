@@ -222,6 +222,40 @@ class TestEventFactory(unittest.TestCase):
         factory_id = EventFactory.getFactoryId(event_input)
         event = EventFactory.createEvent(factory_id, event_input)
         print(json.dumps(event.sensu_result()))
+    def test_unknown_event(self):
+        raw_json = '''
+        {
+          "version": "0",
+          "id": "12345678-1234-1234-1234-123456789012",
+          "detail-type": "EC2 Instance Launch Unsuccessful",
+          "source": "aws.unknown",
+          "account": "123456789012",
+          "time": "yyyy-mm-ddThh:mm:ssZ",
+          "region": "us-west-2",
+          "resources": [
+            "auto-scaling-group-arn",
+            "instance-arn"
+          ],
+          "detail": {
+              "StatusCode": "Failed",
+              "AutoScalingGroupName": "my-auto-scaling-group",
+              "ActivityId": "87654321-4321-4321-4321-210987654321",
+              "Details": {
+                  "Availability Zone": "us-west-2b",
+                  "Subnet ID": "subnet-12345678"
+              },
+              "RequestId": "12345678-1234-1234-1234-123456789012",
+              "StatusMessage": "message-text",
+              "EndTime": "yyyy-mm-ddThh:mm:ssZ",
+              "EC2InstanceId": "i-1234567890abcdef0",
+              "StartTime": "yyyy-mm-ddThh:mm:ssZ",
+              "Cause": "description-text"
+          }
+        }'''
+        event_input = json.loads(raw_json)
+        factory_id = EventFactory.getFactoryId(event_input)
+        event = EventFactory.createEvent(factory_id, event_input)
+        assert event is None
 
 if __name__ == '__main__':
     unittest.main()
