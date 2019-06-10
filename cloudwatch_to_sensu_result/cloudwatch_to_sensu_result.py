@@ -24,12 +24,15 @@ def handler(event, context):
     if SNS_ARN:
         factroy_id = EventFactory.getFactoryId(event)
         event = EventFactory.createEvent(factroy_id, event)
+        if event is None:
+            logger.error("Cannot find factory for event: {}".format(event))
+            return
         sensu_result = event.sensu_result()
         extra_props = {}
         try:
             extra_props = json.loads(EXTRA_SENSU_CHECK_PROPS)
         except ValueError:
-            logger.error('cannot parse as jsn: {}'.format(EXTRA_SENSU_CHECK_PROPS))
+            logger.error('cannot parse as json: {}'.format(EXTRA_SENSU_CHECK_PROPS))
 
         if sensu_result:
             sensu_result.update(extra_props)

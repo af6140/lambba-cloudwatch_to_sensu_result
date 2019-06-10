@@ -13,15 +13,18 @@ class EventFactory:
 
     def createEvent(id, json):
         if not id in EventFactory.factories:
-            class_name_specs  = id.split('.')
-            print(class_name_specs)
-            class_name = class_name_specs[-1]
-            class_name_specs.pop()
-            module_name = '.'.join(class_name_specs)
-            module = importlib.import_module(module_name)
-            factory  = getattr(getattr(module, class_name), 'Factory')
-            print('module:{} class:{}'.format(module_name,class_name))
-            EventFactory.factories[id] = factory()
+            try:
+                class_name_specs  = id.split('.')
+                print(class_name_specs)
+                class_name = class_name_specs[-1]
+                class_name_specs.pop()
+                module_name = '.'.join(class_name_specs)
+                module = importlib.import_module(module_name)
+                factory  = getattr(getattr(module, class_name), 'Factory')
+                print('module:{} class:{}'.format(module_name,class_name))
+                EventFactory.factories[id] = factory()
+            except ModuleNotFoundError:
+                return None
         return EventFactory.factories[id].create(json)
     
     createEvent = staticmethod(createEvent)
