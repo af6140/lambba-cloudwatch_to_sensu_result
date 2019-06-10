@@ -23,7 +23,7 @@ setup(name=pkg_name,
           'idna==2.6',
           'jsonpickle==0.9.6',
           'jsonschema==2.6.0',
-          'urllib3==1.23',
+          'urllib3==1.24.2',
           'requests==2.20.0',
           'wrapt==1.10.11',
           'aws_lambda_logging==0.1.1'
