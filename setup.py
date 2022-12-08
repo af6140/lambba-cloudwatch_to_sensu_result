@@ -18,7 +18,7 @@ setup(name=pkg_name,
       setup_requires=['lambda_setuptools'],
       packages=find_packages('.', exclude=["cloudwatch_to_sensu_result", "*.tests", "*.tests.*", "tests.*", "tests"]),
       install_requires=[
-          'certifi==2018.1.18',
+          'certifi==2022.12.7',
           'chardet==3.0.4',
           'idna==2.6',
           'jsonpickle==0.9.6',
